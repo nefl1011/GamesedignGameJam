@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class ARPlayer : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public static ARPlayer instance;
+
+    [Header("Info/Settings")]
+    public int currentItem = 0;
+    public int[] currentAmmo = { 10, 20 };
+    public int[] ammunition = { 80, 80 };
+    public int[] maxAmmo = { 120, 120 };
+
     void Start()
     {
-        
+        instance = this;
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         
