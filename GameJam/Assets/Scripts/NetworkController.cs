@@ -2,34 +2,72 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Realtime;
 
 public class NetworkController : MonoBehaviourPunCallbacks
 {
-    /******************************************************
-    * Refer to the Photon documentation and scripting API for official definitions and descriptions
-    * 
-    * Documentation: https://doc.photonengine.com/en-us/pun/current/getting-started/pun-intro
-    * Scripting API: https://doc-api.photonengine.com/en/pun/v2/index.html
-    * 
-    * If your Unity editor and standalone builds do not connect with each other but the multiple standalones
-    * do then try manually setting the FixedRegion in the PhotonServerSettings during the development of your project.
-    * https://doc.photonengine.com/en-us/realtime/current/connection-and-authentication/regions
-    *
-    * ******************************************************/
-
     [SerializeField]
-    private int gameVersion;
+    private int GameVersion;
+    [SerializeField]
+    private int RoomSize;
 
-    // Start is called before the first frame update
+    private int RoomNumber = 1;
+    private bool Joined = false;
+
+    public override void OnEnable()
+    {
+        PhotonNetwork.AddCallbackTarget(this);
+    }
+
+    public override void OnDisable()
+    {
+        PhotonNetwork.RemoveCallbackTarget(this);
+    }
+    
     void Start()
     {
-        PhotonNetwork.GameVersion = gameVersion.ToString();
-        PhotonNetwork.ConnectUsingSettings(); //Connects to Photon master servers
-        //Other ways to make a connection can be found here: https://doc-api.photonengine.com/en/pun/v2/class_photon_1_1_pun_1_1_photon_network.html
+        PhotonNetwork.GameVersion = GameVersion.ToString();
+        PhotonNetwork.ConnectUsingSettings();
     }
 
     public override void OnConnectedToMaster()
     {
         Debug.Log("We are now connected to the " + PhotonNetwork.CloudRegion + " server!");
+    }
+
+    public override void OnJoinedRoom()
+    {
+        Debug.Log("Joined Room");
+        Joined = true;
+    }
+    
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        Debug.Log("Failed to join a room");
+        CreateRoom();
+    }
+
+    void CreateRoom()
+    {
+        Debug.Log("Creating room now");
+        RoomOptions roomOps = new RoomOptions() { IsVisible = true, IsOpen = true, MaxPlayers = (byte)RoomSize };
+        PhotonNetwork.CreateRoom("Room" + RoomNumber, roomOps);
+        Debug.Log(RoomNumber);
+    }
+
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        Debug.Log("Failed to create room... trying again");
+        CreateRoom();
+    }
+
+    public void StartGame(int id)
+    {
+        if (!Joined)
+        {
+            RoomNumber = id;
+            PhotonNetwork.JoinRoom("Room" + RoomNumber);
+            Debug.Log("Join room");
+        }
     }
 }
