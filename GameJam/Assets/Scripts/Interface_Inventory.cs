@@ -17,6 +17,7 @@ public class Interface_Inventory : MonoBehaviour
     public GameObject reload;
     public Image reloadPush;
     public Image ammoImage;
+    public Text ammoText;
     public Animator itemMenu;
     public Image curItemImage;
     public Sprite[] itemImages;
@@ -49,28 +50,6 @@ public class Interface_Inventory : MonoBehaviour
         inpEndreload = mCam.ScreenToViewportPoint(Input.mousePosition);
     }
 
-    private bool CheckSwipe()
-    {
-        if (EventSystem.current.IsPointerOverGameObject() || EventSystem.current.IsPointerOverGameObject(1) || EventSystem.current.currentSelectedGameObject != null)
-            return false;
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            inpStart = mCam.ScreenToViewportPoint(Input.mousePosition);
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            inpEnd = mCam.ScreenToViewportPoint(Input.mousePosition);
-            inpDirection = inpEnd - inpStart;
-            inpMagnitude = inpDirection.magnitude;
-            if(inpMagnitude > swipeThreshold)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public void ChooseItem(int itemNo)
     {
         ARPlayer.instance.currentItem = itemNo;
@@ -87,7 +66,7 @@ public class Interface_Inventory : MonoBehaviour
         if(pos.x <= reloadLeftThreshold + 20 && pumpAllowed)
         {
             pumpAllowed = false;
-            if (ARPlayer.instance.ammunition[ARPlayer.instance.currentItem] > 20)
+            if (ARPlayer.instance.ammunition[ARPlayer.instance.currentItem] > 5)
             {
                 ARPlayer.instance.currentAmmo[ARPlayer.instance.currentItem] += 5;
                 ARPlayer.instance.ammunition[ARPlayer.instance.currentItem] -= 5;
@@ -109,6 +88,7 @@ public class Interface_Inventory : MonoBehaviour
 
     public void UpdateAmmo()
     {
+        ammoText.text = ARPlayer.instance.currentAmmo[ARPlayer.instance.currentItem] + " / "+ ARPlayer.instance.ammunition[ARPlayer.instance.currentItem];
         ammoImage.fillAmount = (float)ARPlayer.instance.currentAmmo[ARPlayer.instance.currentItem] / 20f;
     }
 
@@ -128,6 +108,29 @@ public class Interface_Inventory : MonoBehaviour
 
     public void OpenCloseItemMenu()
     {
-        itemMenu.SetTrigger("Trigger");
+        itemMenu.SetTrigger("Trigger"); //Automatic switch between open/close happens in the animator
+    }
+
+    //Unused
+    private bool CheckSwipe()
+    {
+        if (EventSystem.current.IsPointerOverGameObject() || EventSystem.current.IsPointerOverGameObject(1) || EventSystem.current.currentSelectedGameObject != null)
+            return false;
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            inpStart = mCam.ScreenToViewportPoint(Input.mousePosition);
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            inpEnd = mCam.ScreenToViewportPoint(Input.mousePosition);
+            inpDirection = inpEnd - inpStart;
+            inpMagnitude = inpDirection.magnitude;
+            if (inpMagnitude > swipeThreshold)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
