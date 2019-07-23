@@ -140,6 +140,7 @@ MonoBehaviour:
   SpeedMultiplier: 4
   MaxHits: 3
   JumpPossibility: 5
+  TimeForInfection: 2
 --- !u!114 &7328111613912752433
 MonoBehaviour:
   m_ObjectHideFlags: 0

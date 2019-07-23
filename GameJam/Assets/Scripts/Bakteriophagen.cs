@@ -30,6 +30,8 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
     private int MaxHits;
     [SerializeField]
     private int JumpPossibility;
+    [SerializeField]
+    private int TimeForInfection;
 
     private float LifeCurrent;
 
@@ -81,31 +83,29 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
             if (CurrentState == State.MOVE)
             {
                 Move();
-            }/*
+            }
             else if (CurrentState == State.INFECT)
             {
                 Infect();
-            }*/
+            }
         }
     }
     
     public void Move()
     {
-        /*
         if (Hits <= 0)
         {
             CallNewDestination();
             Hits = MaxHits;
             return;
-        }*/
+        }
 
         if (Vector3.Distance(Destination, transform.position) < 0.1f)
         {
             //Infect
-            //NavigationAgent.isStopped = true;
-            CallNewDestination();
+            NavigationAgent.isStopped = true;
             Debug.Log("At Destination");
-            //CurrentState = State.INFECT;
+            CurrentState = State.INFECT;
         }
 
         if (Jump)
@@ -117,7 +117,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
     public void Infect()
     {
         Timer += Time.deltaTime;
-        if (Timer < 5.0f)
+        if (Timer < TimeForInfection)
         {
             if (Hits <= 0)
             {
@@ -132,8 +132,6 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
         {
             Timer = 0.0f;
             CallNewDestination();
-            CurrentState = State.MOVE;
-            NavigationAgent.isStopped = false;
         }
     }
 
@@ -184,6 +182,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
         Destination = new Vector3(x, transform.position.y, y);
         NavigationAgent.SetDestination(Destination);
         Debug.Log("Calculate Destination");
+        NavigationAgent.isStopped = false;
         CurrentState = State.MOVE;
     }
 
