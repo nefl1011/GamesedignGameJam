@@ -101,6 +101,7 @@ public class Interface_Inventory : MonoBehaviour
         }
         if(ARPlayer.instance.currentAmmo[ARPlayer.instance.currentItem] >= 1)
         {
+            ARPlayer.instance.UseItem();
             ARPlayer.instance.currentAmmo[ARPlayer.instance.currentItem] -= 1;
         }
         UpdateAmmo();

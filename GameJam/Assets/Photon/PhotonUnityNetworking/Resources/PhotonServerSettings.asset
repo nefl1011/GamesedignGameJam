@@ -34,6 +34,11 @@ MonoBehaviour:
   - RespawnSpaceship
   - RPC_DestroySupply
   - RPC_SpawnSupply
+<<<<<<< HEAD
   - CalculateRandomDestination
+=======
+  - RPC_Desinfect
+  - RPC_Fight
+>>>>>>> master
   DisableAutoOpenWizard: 1
   ShowSettings: 1

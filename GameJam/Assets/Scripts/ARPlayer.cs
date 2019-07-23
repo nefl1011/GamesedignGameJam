@@ -81,8 +81,7 @@ public class ARPlayer : MonoBehaviourPunCallbacks
 
     public void Desinfect()
     {
-        //Tell SERVER to spawn a desinfect bubble at the given pos;
-        //Server.instance.Caller_Desinfect(Vector 3 pos);
+        GameController.instance.Caller_Desinfect(hitInfo.point);
     }
 
     public void Fight()
