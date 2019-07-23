@@ -14,6 +14,7 @@ public class GameController : MonoBehaviourPunCallbacks
     [Header("References")]
     public List<GameObject> supplyDrops;
     public GameObject[] supplyPrefabs;
+    public GameObject infectPrefab;
 
     public int supplyDropsCreated = 0;
 
@@ -32,10 +33,6 @@ public class GameController : MonoBehaviourPunCallbacks
         
     }
 
-    public void SpawnDrop()
-    {
-
-    }
 
     [PunRPC]
     public void RPC_SpawnSupply(int no, int type, float posX, float posZ)
@@ -61,6 +58,20 @@ public class GameController : MonoBehaviourPunCallbacks
         }
     }
 
+    [PunRPC]
+    public void RPC_Desinfect(float x, float y, float z)
+    {
+        Vector3 pos = new Vector3(x, y, z);
+        GameObject desinfectZone = Instantiate(infectPrefab, pos, Quaternion.identity);
+        Destroy(desinfectZone, 5);
+    }
+
+    [PunRPC]
+    public void RPC_Fight()
+    {
+
+    }
+
     public void Caller_SpawnSupply(int type, float posX, float posZ)
     {
         photonView.RPC("RPC_SpawnSupply", RpcTarget.AllViaServer, supplyDropsCreated, type, posX, posZ);
@@ -70,5 +81,15 @@ public class GameController : MonoBehaviourPunCallbacks
     public void Caller_DestroySupply(int no)
     {
         photonView.RPC("RPC_DestroySupply", RpcTarget.AllViaServer, no);
+    }
+
+    public void Caller_Desinfect(Vector3 pos)
+    {
+        photonView.RPC("RPC_Desinfect", RpcTarget.AllViaServer, pos.x, pos.y, pos.z);
+    }
+
+    public void Caller_Fight()
+    {
+        photonView.RPC("RPC_Fight", RpcTarget.AllViaServer);
     }
 }
