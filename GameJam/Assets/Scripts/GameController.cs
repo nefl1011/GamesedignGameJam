@@ -18,6 +18,8 @@ public class GameController : MonoBehaviourPunCallbacks
 
     public int supplyDropsCreated = 0;
 
+    public List<GameObject> Mushrooms;
+
     private void Awake()
     {
         instance = this;
@@ -25,7 +27,7 @@ public class GameController : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        
+
     }
 
     void Update()
@@ -66,12 +68,6 @@ public class GameController : MonoBehaviourPunCallbacks
         Destroy(desinfectZone, 5);
     }
 
-    [PunRPC]
-    public void RPC_Fight()
-    {
-
-    }
-
     public void Caller_SpawnSupply(int type, float posX, float posZ)
     {
         photonView.RPC("RPC_SpawnSupply", RpcTarget.AllViaServer, supplyDropsCreated, type, posX, posZ);
@@ -86,10 +82,5 @@ public class GameController : MonoBehaviourPunCallbacks
     public void Caller_Desinfect(Vector3 pos)
     {
         photonView.RPC("RPC_Desinfect", RpcTarget.AllViaServer, pos.x, pos.y, pos.z);
-    }
-
-    public void Caller_Fight()
-    {
-        photonView.RPC("RPC_Fight", RpcTarget.AllViaServer);
     }
 }
