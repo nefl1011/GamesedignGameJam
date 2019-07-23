@@ -68,13 +68,6 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
         Spawn();
     }
 
-    private void OnMouseDown()
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            Hit();
-        }
-    }
     // Update is called once per frame
     void Update()
     {
@@ -160,13 +153,14 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
         CurrentState = State.MOVE;
     }
 
-    public void Hit()
+    [PunRPC]
+    public void Hit(int amount)
     {
         if (CurrentState != State.DIED)
         {
             Debug.Log("Hit");
             Hits--;
-            LifeCurrent -= Random.Range(1, 5);
+            LifeCurrent -= amount;
             Debug.Log("Current Life: " + LifeCurrent);
             if (LifeCurrent <= 0)
             {
@@ -180,6 +174,11 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
     public void CalculateRandomDestination(float x, float y)
     {
         Destination = new Vector3(x, transform.position.y, y);
+
+        NavMeshPath path = new NavMeshPath();
+        Debug.Log("Path: " + NavigationAgent.CalculatePath(Destination, path));
+        Debug.Log(path.status);
+
         NavigationAgent.SetDestination(Destination);
         Debug.Log("Calculate Destination");
         NavigationAgent.isStopped = false;

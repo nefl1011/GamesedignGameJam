@@ -8,10 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/StartMenu.unity
     guid: b5ecc2677a341b3479123807bf4882f7
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: 8d6adbbb95f566c4aa9fcda7f9aa4ac5
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Floh_Scene.unity
     guid: 5e4b7ef105399d94981c0de9ca25f3b9
   m_configObjects: {}

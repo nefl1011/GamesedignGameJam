@@ -17,7 +17,7 @@ public class GameSetupController : MonoBehaviour
         Player = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PhotonPlayer"), Vector3.zero, Quaternion.identity);
         if (Player.GetComponent<PhotonView>().Owner.IsMasterClient)
         {
-            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Bakteriophage"), Vector3.zero, Quaternion.identity);
+            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Bakteriophage"), new Vector3(0, 2.5f, 0), Quaternion.identity);
         }
     }
 }

@@ -12,5 +12,5 @@ public interface Virus
     
     void Spawn();
 
-    void Hit();
+    void Hit(int amount);
 }

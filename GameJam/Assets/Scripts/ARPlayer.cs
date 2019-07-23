@@ -88,6 +88,12 @@ public class ARPlayer : MonoBehaviourPunCallbacks
     {
         //Tell SERVER to add dmg to the monster if cast hit the monster and the monster is attackable
         //Server.instance.Caller_Fight();
+        Ray ray = mCam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, rayLength))
+        {
+            photonView.RPC("Hit", RpcTarget.AllViaServer, 1);
+        }
     }
 
     public void ControlSupplyDrops()
