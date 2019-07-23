@@ -114,7 +114,7 @@ public class Bakteriophagen : MonoBehaviour, Virus
             }
             else
             {
-                Debug.Log("Bakteriophage is infecting");
+                //Debug.Log("Bakteriophage is infecting");
             }
         }
         else
