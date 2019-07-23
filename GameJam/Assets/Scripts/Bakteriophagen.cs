@@ -132,10 +132,15 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
     {
         Debug.Log("Died");
         NavigationAgent.isStopped = true;
-        Invoke("Spawn", SpawnSeconds);
+        Invoke("SpawnAfterSeconds", SpawnSeconds);
     }
     
     public void Spawn()
+    {
+        Invoke("SpawnAfterSeconds", 2);
+    }
+
+    public void SpawnAfterSeconds()
     {
         LifeCurrent = Life;
         transform.position = SpawnPosition;
