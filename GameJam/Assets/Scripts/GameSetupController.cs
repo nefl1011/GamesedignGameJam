@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameSetupController : MonoBehaviour
 {
+    private GameObject Player;
     // This script will be added to any multiplayer scene
     void Start()
     {
@@ -13,6 +14,10 @@ public class GameSetupController : MonoBehaviour
     private void CreatePlayer()
     {
         Debug.Log("Creating Player");
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PhotonPlayer"), Vector3.zero, Quaternion.identity);
+        Player = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PhotonPlayer"), Vector3.zero, Quaternion.identity);
+        if (Player.GetComponent<PhotonView>().Owner.IsMasterClient)
+        {
+            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Bakteriophage"), Vector3.zero, Quaternion.identity);
+        }
     }
 }

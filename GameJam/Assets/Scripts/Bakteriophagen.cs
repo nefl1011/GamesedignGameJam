@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Bakteriophagen : MonoBehaviour, Virus
+public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
 {
     [SerializeField]
     private Vector3 SpawnPosition;
@@ -45,14 +46,15 @@ public class Bakteriophagen : MonoBehaviour, Virus
     private int Hits;
 
     private float Timer;
-
+    
     private enum State
     {
         SPAWN = 0,
         MOVE = 1,
-        START_INFECTION = 2,
-        INFECT = 3,
-        DIED = 4
+        CALLED_DEST = 2,
+        START_INFECTION = 3,
+        INFECT = 4,
+        DIED = 5
     }
 
     // Start is called before the first frame update
@@ -66,40 +68,49 @@ public class Bakteriophagen : MonoBehaviour, Virus
 
     private void OnMouseDown()
     {
-        Hit();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Hit();
+        }
     }
     // Update is called once per frame
     void Update()
     {
-        if (CurrentState == State.MOVE)
+        if (PhotonNetwork.IsMasterClient)
         {
-            Move();
-        }
-        else if (CurrentState == State.INFECT)
-        {
-            Infect();
+            if (CurrentState == State.MOVE)
+            {
+                Move();
+            }/*
+            else if (CurrentState == State.INFECT)
+            {
+                Infect();
+            }*/
         }
     }
     
     public void Move()
     {
+        /*
         if (Hits <= 0)
         {
-            CalculateRandomDestination();
+            CallNewDestination();
             Hits = MaxHits;
             return;
-        }
+        }*/
 
         if (Vector3.Distance(Destination, transform.position) < transform.position.y)
         {
             //Infect
+            //NavigationAgent.isStopped = true;
+            CallNewDestination();
             Debug.Log("At Destination");
-            CurrentState = State.INFECT;
+            //CurrentState = State.INFECT;
         }
 
         if (Jump)
         {
-            StartCoroutine(ReachedGround());
+            //StartCoroutine(ReachedGround());
         }
     }
 
@@ -120,15 +131,16 @@ public class Bakteriophagen : MonoBehaviour, Virus
         else
         {
             Timer = 0.0f;
-            CalculateRandomDestination();
+            CallNewDestination();
             CurrentState = State.MOVE;
+            NavigationAgent.isStopped = false;
         }
     }
 
     public void Die()
     {
         Debug.Log("Died");
-        NavigationAgent.SetDestination(transform.position);
+        NavigationAgent.isStopped = true;
         Invoke("Spawn", SpawnSeconds);
     }
     
@@ -137,9 +149,7 @@ public class Bakteriophagen : MonoBehaviour, Virus
         LifeCurrent = Life;
         transform.position = SpawnPosition;
         transform.rotation.Set(0, 0, 0, 0);
-        CalculateRandomDestination();
-        Debug.Log("Destination: " + Destination);
-        Debug.Log("agent dest: " + NavigationAgent.destination);
+        CallNewDestination();
         Hits = MaxHits;
         Timer = 0.0f;
         NavigationAgent.speed = Speed;
@@ -168,10 +178,23 @@ public class Bakteriophagen : MonoBehaviour, Virus
         }
     }
 
-    private void CalculateRandomDestination()
+    [PunRPC]
+    public void CalculateRandomDestination(Vector3 NewDestination)
     {
-        NavigationAgent.SetDestination(new Vector3(Random.Range(-AreaX, AreaX), transform.position.y, Random.Range(-AreaZ, AreaZ)));
+        NavigationAgent.SetDestination(NewDestination);
         Destination = NavigationAgent.destination;
+        Debug.Log("Calculate Destination");
+        CurrentState = State.MOVE;
+    }
+
+    private void CallNewDestination()
+    {
+        CurrentState = State.CALLED_DEST;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Vector3 NewDestination = new Vector3(Random.Range(-AreaX, AreaX), transform.position.y, Random.Range(-AreaZ, AreaZ));
+            this.photonView.RPC("CalculateRandomDestination", RpcTarget.AllViaServer, NewDestination);
+        }
     }
 
     private void CalculateJump()
