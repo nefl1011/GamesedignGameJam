@@ -99,7 +99,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
             return;
         }*/
 
-        if (Vector3.Distance(Destination, transform.position) < transform.position.y)
+        if (Vector3.Distance(Destination, transform.position) < 0.1f)
         {
             //Infect
             //NavigationAgent.isStopped = true;
@@ -179,10 +179,10 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
     }
 
     [PunRPC]
-    public void CalculateRandomDestination(Vector3 NewDestination)
+    public void CalculateRandomDestination(float x, float y)
     {
-        NavigationAgent.SetDestination(NewDestination);
-        Destination = NavigationAgent.destination;
+        Destination = new Vector3(x, transform.position.y, y);
+        NavigationAgent.SetDestination(Destination);
         Debug.Log("Calculate Destination");
         CurrentState = State.MOVE;
     }
@@ -192,8 +192,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
         CurrentState = State.CALLED_DEST;
         if (PhotonNetwork.IsMasterClient)
         {
-            Vector3 NewDestination = new Vector3(Random.Range(-AreaX, AreaX), transform.position.y, Random.Range(-AreaZ, AreaZ));
-            this.photonView.RPC("CalculateRandomDestination", RpcTarget.AllViaServer, NewDestination);
+            this.photonView.RPC("CalculateRandomDestination", RpcTarget.AllViaServer, Random.Range(-AreaX, AreaX), Random.Range(-AreaZ, AreaZ));
         }
     }
 
