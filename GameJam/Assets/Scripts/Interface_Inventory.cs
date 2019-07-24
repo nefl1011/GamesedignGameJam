@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Interface_Inventory : MonoBehaviour
@@ -137,5 +138,10 @@ public class Interface_Inventory : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public void Leave()
+    {
+        SceneManager.LoadScene(0);
     }
 }
