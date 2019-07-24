@@ -17,9 +17,7 @@ using Vuforia;
 /// </summary>
 public class Target : MonoBehaviour, ITrackableEventHandler
 {
-
-    public NetworkController Network;
-
+    
     #region PROTECTED_MEMBER_VARIABLES
 
     protected TrackableBehaviour mTrackableBehaviour;
@@ -102,7 +100,6 @@ public class Target : MonoBehaviour, ITrackableEventHandler
         foreach (var component in canvasComponents)
             component.enabled = true;
 
-        Network.StartGame(mTrackableBehaviour.GetInstanceID());
     }
 
 

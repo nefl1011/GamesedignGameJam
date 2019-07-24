@@ -13,7 +13,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
 
     private int RoomNumber = 1;
     private bool Joined = false;
-
+    /*
     public override void OnEnable()
     {
         PhotonNetwork.AddCallbackTarget(this);
@@ -23,7 +23,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.RemoveCallbackTarget(this);
     }
-    
+    */
     void Start()
     {
         PhotonNetwork.GameVersion = GameVersion.ToString();
@@ -34,7 +34,7 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         Debug.Log("We are now connected to the " + PhotonNetwork.CloudRegion + " server!");
     }
-
+    /*
     public override void OnJoinedRoom()
     {
         Debug.Log("Joined Room");
@@ -75,4 +75,5 @@ public class NetworkController : MonoBehaviourPunCallbacks
     {
         Debug.Log("Left Room");
     }
+    */
  }

@@ -46,6 +46,13 @@ public class StartLobbyController : MonoBehaviourPunCallbacks
         CreateRoom(); //Retrying to create a new room with a different name.
     }
 
+    public override void OnLeftRoom()
+    {
+        quickCancelButton.SetActive(false);
+        quickStartButton.SetActive(true);
+        Debug.Log("Left Room");
+    }
+
     public void QuickCancel() //Paired to the cancel button. Used to stop looking for a room to join.
     {
         quickCancelButton.SetActive(false);
