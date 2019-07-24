@@ -172,7 +172,7 @@ public class GameController : MonoBehaviourPunCallbacks
 
         if (Player.GetComponent<PhotonView>().Owner.IsMasterClient)
         {
-            GameObject bakterioPhage = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Bakteriophage"), new Vector3(0, 2.5f, 0), Quaternion.identity);
+            GameObject bakterioPhage = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Bakteriophage"), new Vector3(0, 0, 0), Quaternion.identity);
             virus = bakterioPhage.GetComponent<Virus>();
             virus.Spawn();
         }

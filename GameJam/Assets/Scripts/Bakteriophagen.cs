@@ -107,8 +107,8 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
             Hits = MaxHits;
             return;
         }
-
-        if (Vector3.Distance(Destination, transform.position) < 0.1f)
+        Debug.Log(Vector3.Distance(Destination, transform.position));
+        if (Vector3.Distance(Destination, transform.position) < 2)
         {
             //Infect
             NavigationAgent.isStopped = true;
@@ -148,7 +148,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
             float xPos = MushroomSpawnRadius * Mathf.Cos(angle * MushroomCounter);
             float yPos = MushroomSpawnRadius * Mathf.Sin(angle * MushroomCounter);
 
-            Vector3 pos = new Vector3(xPos + transform.position.x, 0, yPos + transform.position.z);
+            Vector3 pos = new Vector3(xPos + transform.position.x, transform.position.y, yPos + transform.position.z);
 
             Controller.Caller_Infect(pos);
 
