@@ -14,10 +14,7 @@ public class ARPlayer : MonoBehaviourPunCallbacks
     public int rayLength = 40;
 
     private Camera mCam;
-
-    public List<GameObject> Mushrooms;
-    public int MinMushroomsToFight;
-
+    
     private RaycastHit hitInfo;
 
 
@@ -32,7 +29,6 @@ public class ARPlayer : MonoBehaviourPunCallbacks
             InvokeRepeating("ControlSupplyDrops",5f,GameController.instance.spawnTimer);
         }
         mCam = Camera.main;
-        Mushrooms = new List<GameObject>();
     }
 
 
@@ -99,7 +95,7 @@ public class ARPlayer : MonoBehaviourPunCallbacks
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, rayLength))
         {
-            if (Mushrooms.Count < MinMushroomsToFight)
+            if (GameController.instance.couldFight)
             {
                 photonView.RPC("Hit", RpcTarget.AllViaServer, 1);
             }

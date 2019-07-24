@@ -6,6 +6,7 @@ using UnityEngine.AI;
 
 public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
 {
+    
     [SerializeField]
     private Vector3 SpawnPosition;
     [SerializeField]
@@ -32,6 +33,10 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
     private int JumpPossibility;
     [SerializeField]
     private int TimeForInfection;
+    [SerializeField]
+    private int MaxMushroomCount;
+    [SerializeField]
+    private float MushroomSpawnRadius;
 
     private float LifeCurrent;
 
@@ -48,6 +53,10 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
     private int Hits;
 
     private float Timer;
+
+    private GameController Controller;
+
+    private int MushroomCounter;
     
     private enum State
     {
@@ -58,7 +67,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
         INFECT = 4,
         DIED = 5
     }
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -66,6 +75,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
         NavigationAgent = GetComponent<NavMeshAgent>();
         //VirusAnimator = GetComponent<Animator>();
         Spawn();
+        Controller = GameController.instance;
     }
 
     // Update is called once per frame
@@ -76,6 +86,11 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
             if (CurrentState == State.MOVE)
             {
                 Move();
+            }
+            else if (CurrentState == State.START_INFECTION)
+            {
+                InvokeRepeating("SpawnMushroom", 0, TimeForInfection / MaxMushroomCount);
+                CurrentState = State.INFECT;
             }
             else if (CurrentState == State.INFECT)
             {
@@ -98,7 +113,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
             //Infect
             NavigationAgent.isStopped = true;
             Debug.Log("At Destination");
-            CurrentState = State.INFECT;
+            CurrentState = State.START_INFECTION;
         }
 
         if (Jump)
@@ -109,16 +124,13 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
 
     public void Infect()
     {
-        Timer += Time.deltaTime;
         if (Timer < TimeForInfection)
         {
+            Timer += Time.deltaTime;
             if (Hits <= 0)
             {
+                MushroomCounter = MaxMushroomCount;
                 CurrentState = State.MOVE;
-            }
-            else
-            {
-                //Debug.Log("Bakteriophage is infecting");
             }
         }
         else
@@ -128,14 +140,40 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
         }
     }
 
+    private void SpawnMushroom()
+    {
+        if (MushroomCounter < MaxMushroomCount)
+        {
+            float angle = Mathf.PI * 2.0f / MaxMushroomCount;
+            float xPos = MushroomSpawnRadius * Mathf.Cos(angle * MushroomCounter);
+            float yPos = MushroomSpawnRadius * Mathf.Sin(angle * MushroomCounter);
+
+            Vector3 pos = new Vector3(xPos + transform.position.x, 0, yPos + transform.position.z);
+
+            Controller.Caller_Infect(pos);
+
+            MushroomCounter++;
+        }
+        else
+        {
+            MushroomCounter = 0;
+            CancelInvoke("SpawnMushroom");
+        }
+    }
+
     public void Die()
     {
         Debug.Log("Died");
         NavigationAgent.isStopped = true;
-        Invoke("Spawn", SpawnSeconds);
+        Invoke("SpawnAfterSeconds", SpawnSeconds);
     }
     
     public void Spawn()
+    {
+        Invoke("SpawnAfterSeconds", 2);
+    }
+
+    public void SpawnAfterSeconds()
     {
         LifeCurrent = Life;
         transform.position = SpawnPosition;
@@ -144,6 +182,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
         Hits = MaxHits;
         Timer = 0.0f;
         NavigationAgent.speed = Speed;
+        MushroomCounter = 0;
 
         if (CurrentState == State.SPAWN)
         {
@@ -190,7 +229,8 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
         CurrentState = State.CALLED_DEST;
         if (PhotonNetwork.IsMasterClient)
         {
-            this.photonView.RPC("CalculateRandomDestination", RpcTarget.AllViaServer, Random.Range(-AreaX, AreaX), Random.Range(-AreaZ, AreaZ));
+            Vector3 newDestination = RandomNavmeshLocation(AreaX);
+            this.photonView.RPC("CalculateRandomDestination", RpcTarget.AllViaServer, newDestination.x, newDestination.z);//Random.Range(-AreaX, AreaX), Random.Range(-AreaZ, AreaZ));
         }
     }
 
@@ -206,5 +246,18 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
         yield return new WaitForSeconds(TimeForJump);
         NavigationAgent.speed = Speed;
         NavigationAgent.angularSpeed = AngularSpeed;
+    }
+
+    private Vector3 RandomNavmeshLocation(float radius)
+    {
+        Vector3 randomDirection = Random.insideUnitSphere * radius;
+
+        NavMeshHit hit;
+        Vector3 finalPosition = Vector3.zero;
+        if (NavMesh.SamplePosition(randomDirection, out hit, radius, 1))
+        {
+            finalPosition = hit.position;
+        }
+        return finalPosition;
     }
 }
