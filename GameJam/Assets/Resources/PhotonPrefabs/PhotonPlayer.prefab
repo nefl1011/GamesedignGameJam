@@ -71,5 +71,3 @@ MonoBehaviour:
   ammunition: 5000000050000000
   maxAmmo: 7800000078000000
   rayLength: 40
-  Mushrooms: []
-  MinMushroomsToFight: 10
