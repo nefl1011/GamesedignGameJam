@@ -108,7 +108,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
             Hits = MaxHits;
             return;
         }
-        Debug.Log(Vector3.Distance(Destination, transform.position));
+
         if (Vector3.Distance(Destination, transform.position) < 2)
         {
             //Infect

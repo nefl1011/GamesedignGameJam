@@ -90,13 +90,19 @@ public class ARPlayer : MonoBehaviourPunCallbacks
 
     public void Fight()
     {
-        if (hitInfo.collider != null && hitInfo.collider.CompareTag("Enemy"))
+        if (hitInfo.collider != null)
         {
-            if (GameController.instance.couldFight)
-            {
-                GameController.instance.Caller_Fight();
-            }
             GameController.instance.Caller_SpawnParts(hitInfo.point);
+            Debug.Log("spawn parts");
+            if (hitInfo.collider.CompareTag("Enemy"))
+            {
+                Debug.Log("Enemy");
+                if (GameController.instance.couldFight)
+                {
+                    Debug.Log("couldFight");
+                    GameController.instance.Caller_Fight();
+                }
+            }
         }
     }
 

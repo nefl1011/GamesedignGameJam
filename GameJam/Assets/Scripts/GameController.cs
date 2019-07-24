@@ -112,7 +112,7 @@ public class GameController : MonoBehaviourPunCallbacks
 
         Mushrooms.Add(new MushroomStruct { id = mushroomsCreated, mushroom = newMushroomComponent });
 
-        couldFight = Mushrooms.Count >= MinMushroomsToFight;
+        couldFight = Mushrooms.Count <= MinMushroomsToFight;
         mushroomsCreated++;
     }
 
