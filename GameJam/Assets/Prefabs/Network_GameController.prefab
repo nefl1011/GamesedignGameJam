@@ -71,7 +71,7 @@ MonoBehaviour:
   supplyDrops: []
   supplyPrefabs:
   - {fileID: 9025644398157710492, guid: 0fe58d6c51293744db2e5fcfe8610ded, type: 3}
-  - {fileID: 9025644398157710492, guid: fba04294414e71141a71b6de2573681e, type: 3}
+  - {fileID: 9025644398157710492, guid: 1789ba840823d7e41803e68a0beb8bfc, type: 3}
   infectPrefab: {fileID: 5327949462552369288, guid: 5eacb193feb258d43a0d7d2c3e4f1f11,
     type: 3}
   mushroomPrefabs:
@@ -79,6 +79,6 @@ MonoBehaviour:
   - {fileID: 3567243125331784058, guid: 559c363990ab3044e9fb1663c719cf0b, type: 3}
   - {fileID: 3567243125331784058, guid: 62e04d4738f74174698d73c23aa0bb85, type: 3}
   supplyDropsCreated: 0
-  MinMushroomsToFight: 5
+  MinMushroomsToFight: 30
   mushroomsCreated: 0
   couldFight: 1

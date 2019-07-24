@@ -89,11 +89,11 @@ public class ARPlayer : MonoBehaviourPunCallbacks
 
     public void Fight()
     {
-        if (hitInfo.collider.CompareTag("Enemy"))
+        if (hitInfo.collider != null && hitInfo.collider.CompareTag("Enemy"))
         {
             if (GameController.instance.couldFight)
             {
-                photonView.RPC("Hit", RpcTarget.AllViaServer, 1);
+                GameController.instance.Caller_Fight();
             }
         }
     }

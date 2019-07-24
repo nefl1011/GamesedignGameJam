@@ -70,4 +70,9 @@ public class NetworkController : MonoBehaviourPunCallbacks
             Debug.Log("Join room");
         }
     }
-}
+
+    public override void OnLeftRoom()
+    {
+        Debug.Log("Left Room");
+    }
+ }
