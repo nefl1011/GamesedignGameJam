@@ -21,6 +21,7 @@ public class Interface_Inventory : MonoBehaviour
     public Animator itemMenu;
     public Image curItemImage;
     public Sprite[] itemImages;
+    public GameObject splatter;
 
     public bool itemLoaded = true;
     public bool pumpAllowed;
@@ -66,6 +67,7 @@ public class Interface_Inventory : MonoBehaviour
         if(pos.x <= reloadLeftThreshold + 20 && pumpAllowed)
         {
             pumpAllowed = false;
+            splatter.SetActive(true);
             if (ARPlayer.instance.ammunition[ARPlayer.instance.currentItem] > 5)
             {
                 ARPlayer.instance.currentAmmo[ARPlayer.instance.currentItem] += 5;
@@ -80,6 +82,7 @@ public class Interface_Inventory : MonoBehaviour
         }
         if(pos.x >= reloadRightThreshold - 20 && !pumpAllowed)
         {
+            splatter.SetActive(false);
             pumpAllowed = true;
         }
         pos.x = Mathf.Clamp(pos.x, reloadLeftThreshold, reloadRightThreshold);
@@ -96,6 +99,7 @@ public class Interface_Inventory : MonoBehaviour
     {
         if (ARPlayer.instance.currentAmmo[ARPlayer.instance.currentItem] == 1)
         {
+            splatter.SetActive(false);
             itemLoaded = false;
             reload.SetActive(true);
         }
