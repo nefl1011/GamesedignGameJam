@@ -23,7 +23,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: neonorange
-    second: {fileID: 2100000, guid: e7b2c00c3277f494cb0fa3883a16d780, type: 2}
+    second: {fileID: 2100000, guid: ecd7c38c5162a8f40b7c62160e214483, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
