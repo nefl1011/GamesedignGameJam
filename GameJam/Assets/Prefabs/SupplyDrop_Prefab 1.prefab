@@ -75,7 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 641828d6bbfee824b9e97ae4c7165b4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemNo: 0
+  itemNo: 1
   amount: 30
   dropNo: 0
 --- !u!1001 &6977505168943677004
