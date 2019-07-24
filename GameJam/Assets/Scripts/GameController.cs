@@ -19,11 +19,19 @@ public class GameController : MonoBehaviourPunCallbacks
 
     public int supplyDropsCreated = 0;
     
-    public List<GameObject> Mushrooms;
+    public List<MushroomStruct> Mushrooms;
 
     public int MinMushroomsToFight;
 
+    public int mushroomsCreated = 0;
+
     public bool couldFight;
+
+    public struct MushroomStruct
+    {
+        public int id;
+        public Mushroom mushroom;
+    }
 
     private void Awake()
     {
@@ -32,7 +40,7 @@ public class GameController : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        Mushrooms = new List<GameObject>();
+        Mushrooms = new List<MushroomStruct>();
     }
 
     void Update()
@@ -66,6 +74,21 @@ public class GameController : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
+    public void RPC_DestroyMushroom(int id)
+    {
+        for (int i = 0; i < Mushrooms.Count; i++)
+        {
+            MushroomStruct tempMushroom = Mushrooms[i];
+            if (id == tempMushroom.id)
+            {
+                GameObject mGameObject = tempMushroom.mushroom.gameObject;
+                Mushrooms.Remove(tempMushroom);
+                Destroy(mGameObject);
+            }
+        }
+    }
+
+    [PunRPC]
     public void RPC_Desinfect(float x, float y, float z)
     {
         Vector3 pos = new Vector3(x, y, z);
@@ -77,10 +100,14 @@ public class GameController : MonoBehaviourPunCallbacks
     public void RPC_Infect(float x, float y, float z)
     {
         Vector3 pos = new Vector3(x, y, z);
-        GameObject mushroom = Instantiate(mushroomPrefab, pos, Quaternion.identity);
-        Mushrooms.Add(mushroom);
-        Debug.Log("RPC_Infect");
+        GameObject newMushroom = Instantiate(mushroomPrefab, pos, Quaternion.identity);
+        Mushroom newMushroomComponent = newMushroom.GetComponent<Mushroom>();
+        newMushroomComponent.id = mushroomsCreated;
+
+        Mushrooms.Add(new MushroomStruct { id = mushroomsCreated, mushroom = newMushroomComponent });
+
         couldFight = Mushrooms.Count >= MinMushroomsToFight;
+        mushroomsCreated++;
     }
 
     public void Caller_SpawnSupply(int type, float posX, float posZ)
@@ -102,5 +129,10 @@ public class GameController : MonoBehaviourPunCallbacks
     public void Caller_Infect(Vector3 pos)
     {
         photonView.RPC("RPC_Infect", RpcTarget.AllViaServer, pos.x, pos.y, pos.z);
+    }
+
+    public void Caller_Destroy_Mushroom(int id)
+    {
+        photonView.RPC("RPC_DestroyMushroom", RpcTarget.AllViaServer, id);
     }
 }
