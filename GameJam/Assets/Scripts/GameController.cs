@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using System.IO;
 
 public class GameController : MonoBehaviourPunCallbacks
 {
@@ -28,6 +29,8 @@ public class GameController : MonoBehaviourPunCallbacks
 
     public bool couldFight;
 
+    private Virus virus;
+
     public struct MushroomStruct
     {
         public int id;
@@ -42,6 +45,7 @@ public class GameController : MonoBehaviourPunCallbacks
     void Start()
     {
         Mushrooms = new List<MushroomStruct>();
+        CreatePlayer();
     }
 
     void Update()
@@ -111,6 +115,12 @@ public class GameController : MonoBehaviourPunCallbacks
         mushroomsCreated++;
     }
 
+    [PunRPC]
+    public void RPC_Fight(int amount)
+    {
+        virus.Hit(amount);
+    }
+
     public void Caller_SpawnSupply(int type, float posX, float posZ)
     {
         photonView.RPC("RPC_SpawnSupply", RpcTarget.AllViaServer, supplyDropsCreated, type, posX, posZ);
@@ -135,5 +145,23 @@ public class GameController : MonoBehaviourPunCallbacks
     public void Caller_Destroy_Mushroom(int id)
     {
         photonView.RPC("RPC_DestroyMushroom", RpcTarget.AllViaServer, id);
+    }
+
+    public void Caller_Fight()
+    {
+        photonView.RPC("RPC_Fight", RpcTarget.AllViaServer, 1);
+    }
+
+    private void CreatePlayer()
+    {
+        Debug.Log("Creating Player");
+        GameObject Player = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PhotonPlayer"), Vector3.zero, Quaternion.identity);
+
+        if (Player.GetComponent<PhotonView>().Owner.IsMasterClient)
+        {
+            GameObject bakterioPhage = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Bakteriophage"), new Vector3(0, 2.5f, 0), Quaternion.identity);
+            virus = bakterioPhage.GetComponent<Virus>();
+            virus.Spawn();
+        }
     }
 }

@@ -74,7 +74,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
         CurrentState = State.SPAWN;
         NavigationAgent = GetComponent<NavMeshAgent>();
         //VirusAnimator = GetComponent<Animator>();
-        Spawn();
+        //Spawn();
         Controller = GameController.instance;
     }
 
@@ -165,7 +165,14 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
     {
         Debug.Log("Died");
         NavigationAgent.isStopped = true;
-        Invoke("SpawnAfterSeconds", SpawnSeconds);
+        MainMenu.KilledVirus_First();
+        Invoke("GoBackToMainMenu", 5);
+    }
+
+    private void GoBackToMainMenu()
+    {
+        PhotonNetwork.LeaveRoom();
+        Interface_Inventory.instance.Leave();
     }
     
     public void Spawn()
@@ -192,7 +199,6 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
         CurrentState = State.MOVE;
     }
 
-    [PunRPC]
     public void Hit(int amount)
     {
         if (CurrentState != State.DIED)
