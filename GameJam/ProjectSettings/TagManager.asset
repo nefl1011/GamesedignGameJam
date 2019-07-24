@@ -8,6 +8,7 @@ TagManager:
   - SupplyDrop
   - Infection
   - Desinfection
+  - WorldPlane
   layers:
   - Default
   - TransparentFX

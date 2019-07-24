@@ -879,7 +879,7 @@ GameObject:
   - component: {fileID: 1687006679}
   m_Layer: 0
   m_Name: Plane
-  m_TagString: Untagged
+  m_TagString: WorldPlane
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -892,10 +892,10 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687006678}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1687006680
@@ -1099,5 +1099,28 @@ PrefabInstance:
       propertyPath: viewIdField
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2700554223326535159, guid: dd9e34c4afde9074cb569dd1fc24be00,
+        type: 3}
+      propertyPath: mushroomPrefabs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2700554223326535159, guid: dd9e34c4afde9074cb569dd1fc24be00,
+        type: 3}
+      propertyPath: mushroomPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 3567243125331784058, guid: 2aeec3e73a4c9bd40b843d64d2234bb0,
+        type: 3}
+    - target: {fileID: 2700554223326535159, guid: dd9e34c4afde9074cb569dd1fc24be00,
+        type: 3}
+      propertyPath: mushroomPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 7506311377791614372, guid: 32ef9b0097b0cb14ea888d7435a0f7fc,
+        type: 3}
+    - target: {fileID: 2700554223326535159, guid: dd9e34c4afde9074cb569dd1fc24be00,
+        type: 3}
+      propertyPath: mushroomPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 7941925765733142266, guid: 93e8c323531a27a4fa09e1a8126c78e8,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd9e34c4afde9074cb569dd1fc24be00, type: 3}

@@ -13,4 +13,12 @@ public class SupplyDrop : MonoBehaviour
         GameController.instance.Caller_DestroySupply(dropNo);
         enabled = false;
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "WorldPlane")
+        {
+            GameController.instance.Caller_DestroySupply(dropNo);
+        }
+    }
 }

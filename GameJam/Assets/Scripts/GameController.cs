@@ -15,7 +15,8 @@ public class GameController : MonoBehaviourPunCallbacks
     public List<GameObject> supplyDrops;
     public GameObject[] supplyPrefabs;
     public GameObject infectPrefab;
-    public GameObject mushroomPrefab;
+
+    public GameObject[] mushroomPrefabs;
 
     public int supplyDropsCreated = 0;
     
@@ -97,10 +98,10 @@ public class GameController : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void RPC_Infect(float x, float y, float z)
+    public void RPC_Infect(float x, float y, float z, int mushroomType)
     {
         Vector3 pos = new Vector3(x, y, z);
-        GameObject newMushroom = Instantiate(mushroomPrefab, pos, Quaternion.identity);
+        GameObject newMushroom = Instantiate(mushroomPrefabs[mushroomType], pos, Quaternion.identity);
         Mushroom newMushroomComponent = newMushroom.GetComponent<Mushroom>();
         newMushroomComponent.id = mushroomsCreated;
 
@@ -133,6 +134,6 @@ public class GameController : MonoBehaviourPunCallbacks
 
     public void Caller_Destroy_Mushroom(int id)
     {
-        photonView.RPC("RPC_DestroyMushroom", RpcTarget.AllViaServer, id);
+        photonView.RPC("RPC_DestroyMushroom", RpcTarget.AllViaServer, id, Random.Range(0, 300) % 3);
     }
 }
