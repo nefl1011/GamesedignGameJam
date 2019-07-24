@@ -16,6 +16,7 @@ public class GameController : MonoBehaviourPunCallbacks
     public List<GameObject> supplyDrops;
     public GameObject[] supplyPrefabs;
     public GameObject infectPrefab;
+    public GameObject shotPrefab;
 
     public GameObject[] mushroomPrefabs;
 
@@ -121,6 +122,14 @@ public class GameController : MonoBehaviourPunCallbacks
         virus.Hit(amount);
     }
 
+    [PunRPC]
+    public void RPC_SpawnParts(float x, float y, float z)
+    {
+        Vector3 pos = new Vector3(x, y, z);
+        GameObject shotVisual = Instantiate(shotPrefab, pos, Quaternion.identity);
+        Destroy(shotVisual, 5);
+    }
+
     public void Caller_SpawnSupply(int type, float posX, float posZ)
     {
         photonView.RPC("RPC_SpawnSupply", RpcTarget.AllViaServer, supplyDropsCreated, type, posX, posZ);
@@ -150,6 +159,10 @@ public class GameController : MonoBehaviourPunCallbacks
     public void Caller_Fight()
     {
         photonView.RPC("RPC_Fight", RpcTarget.AllViaServer, 1);
+    }
+
+    public void Caller_SpawnParts(Vector3 pos) {
+        photonView.RPC("RPC_SpawnParts", RpcTarget.AllViaServer, pos.x, pos.y, pos.z);
     }
 
     private void CreatePlayer()

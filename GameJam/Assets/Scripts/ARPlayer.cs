@@ -47,10 +47,10 @@ public class ARPlayer : MonoBehaviourPunCallbacks
         switch (currentItem)
         {
             case 0:
-                Desinfect();
+                Fight();
                 break;
             case 1:
-                Fight();
+                Desinfect();
                 break;
             default:
                 break;
@@ -84,6 +84,7 @@ public class ARPlayer : MonoBehaviourPunCallbacks
 
     public void Desinfect()
     {
+        if(hitInfo.collider != null)
         GameController.instance.Caller_Desinfect(hitInfo.point);
     }
 
@@ -95,6 +96,7 @@ public class ARPlayer : MonoBehaviourPunCallbacks
             {
                 GameController.instance.Caller_Fight();
             }
+            GameController.instance.Caller_SpawnParts(hitInfo.point);
         }
     }
 
@@ -103,7 +105,7 @@ public class ARPlayer : MonoBehaviourPunCallbacks
         int rng = (int)Random.Range(0, 100);
         if(rng < GameController.instance.dropChance)
         {
-            Debug.Log("GenerateDrop");
+            //Debug.Log("GenerateDrop");
             int typeRng = Random.Range(0, 2);
             float xRng = Random.Range(-30f, 30f); 
             float zRng = Random.Range(-30f, 30f);

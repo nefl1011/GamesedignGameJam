@@ -1476,7 +1476,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: cb0013b416b27c845b52160d17eb534f, type: 3}
   - {fileID: 21300000, guid: 752d6b8366c340d41adf684a47a83c64, type: 3}
   splatter: {fileID: 4437205287224336164}
-  itemLoaded: 0
+  itemLoaded: 1
   pumpAllowed: 0
 --- !u!1 &2315845034463051815
 GameObject:
