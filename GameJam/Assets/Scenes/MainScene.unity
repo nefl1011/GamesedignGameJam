@@ -1114,13 +1114,19 @@ PrefabInstance:
         type: 3}
       propertyPath: mushroomPrefabs.Array.data[1]
       value: 
-      objectReference: {fileID: 7506311377791614372, guid: 32ef9b0097b0cb14ea888d7435a0f7fc,
+      objectReference: {fileID: 3567243125331784058, guid: 559c363990ab3044e9fb1663c719cf0b,
         type: 3}
     - target: {fileID: 2700554223326535159, guid: dd9e34c4afde9074cb569dd1fc24be00,
         type: 3}
       propertyPath: mushroomPrefabs.Array.data[2]
       value: 
-      objectReference: {fileID: 7941925765733142266, guid: 93e8c323531a27a4fa09e1a8126c78e8,
+      objectReference: {fileID: 3567243125331784058, guid: 62e04d4738f74174698d73c23aa0bb85,
+        type: 3}
+    - target: {fileID: 2700554223326535159, guid: dd9e34c4afde9074cb569dd1fc24be00,
+        type: 3}
+      propertyPath: supplyPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 9025644398157710492, guid: 1789ba840823d7e41803e68a0beb8bfc,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd9e34c4afde9074cb569dd1fc24be00, type: 3}

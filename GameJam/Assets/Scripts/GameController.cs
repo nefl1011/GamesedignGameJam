@@ -129,11 +129,11 @@ public class GameController : MonoBehaviourPunCallbacks
 
     public void Caller_Infect(Vector3 pos)
     {
-        photonView.RPC("RPC_Infect", RpcTarget.AllViaServer, pos.x, pos.y, pos.z);
+        photonView.RPC("RPC_Infect", RpcTarget.AllViaServer, pos.x, pos.y, pos.z, Random.Range(0, 300) % 3);
     }
 
     public void Caller_Destroy_Mushroom(int id)
     {
-        photonView.RPC("RPC_DestroyMushroom", RpcTarget.AllViaServer, id, Random.Range(0, 300) % 3);
+        photonView.RPC("RPC_DestroyMushroom", RpcTarget.AllViaServer, id);
     }
 }
