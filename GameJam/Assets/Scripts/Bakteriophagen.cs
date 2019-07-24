@@ -73,7 +73,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
     {
         CurrentState = State.SPAWN;
         NavigationAgent = GetComponent<NavMeshAgent>();
-        //VirusAnimator = GetComponent<Animator>();
+        VirusAnimator = GetComponentInChildren<Animator>();
         //Spawn();
         Controller = GameController.instance;
     }
@@ -91,6 +91,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
             {
                 InvokeRepeating("SpawnMushroom", 0, TimeForInfection / MaxMushroomCount);
                 CurrentState = State.INFECT;
+                VirusAnimator.SetTrigger("Infect");
             }
             else if (CurrentState == State.INFECT)
             {
@@ -166,6 +167,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
         Debug.Log("Died");
         NavigationAgent.isStopped = true;
         MainMenu.KilledVirus_First();
+        VirusAnimator.SetTrigger("Death");
         Invoke("GoBackToMainMenu", 5);
     }
 
