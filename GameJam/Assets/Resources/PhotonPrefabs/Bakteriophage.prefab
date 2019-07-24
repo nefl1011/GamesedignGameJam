@@ -131,8 +131,8 @@ MonoBehaviour:
   SpawnPosition: {x: 0, y: 0, z: 0}
   SpawnSeconds: 5
   Life: 10
-  AreaX: 10
-  AreaZ: 10
+  AreaX: 20
+  AreaZ: 20
   AngularSpeed: 120
   Speed: 50
   TimeForJump: 2
@@ -140,7 +140,9 @@ MonoBehaviour:
   SpeedMultiplier: 4
   MaxHits: 3
   JumpPossibility: 5
-  TimeForInfection: 2
+  TimeForInfection: 5
+  MaxMushroomCount: 5
+  MushroomSpawnRadius: 5
 --- !u!114 &7328111613912752433
 MonoBehaviour:
   m_ObjectHideFlags: 0
