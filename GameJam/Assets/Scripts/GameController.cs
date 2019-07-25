@@ -92,6 +92,7 @@ public class GameController : MonoBehaviourPunCallbacks
                 Destroy(mGameObject);
             }
         }
+        couldFight = Mushrooms.Count <= MinMushroomsToFight;
     }
 
     [PunRPC]
@@ -113,6 +114,8 @@ public class GameController : MonoBehaviourPunCallbacks
         Mushrooms.Add(new MushroomStruct { id = mushroomsCreated, mushroom = newMushroomComponent });
 
         couldFight = Mushrooms.Count <= MinMushroomsToFight;
+        Debug.Log("MushroomsCount " + Mushrooms.Count);
+        Debug.Log("couldFight " + couldFight);
         mushroomsCreated++;
     }
 

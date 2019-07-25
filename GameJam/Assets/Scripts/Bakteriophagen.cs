@@ -201,13 +201,12 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
         NavigationAgent.isStopped = true;
         MainMenu.KilledVirus_First();
         VirusAnimator.SetTrigger("Death");
-        Invoke("GoBackToMainMenu", 5);
+        Invoke("GoBackToMainMenu", 3);
     }
 
     private void GoBackToMainMenu()
     {
-        PhotonNetwork.LeaveRoom();
-        Interface_Inventory.instance.Leave();
+        Interface_Inventory.instance.WinScreen();
     }
     
     public void Spawn()

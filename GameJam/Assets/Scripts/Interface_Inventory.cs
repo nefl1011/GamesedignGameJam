@@ -2,8 +2,9 @@
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class Interface_Inventory : MonoBehaviour
+public class Interface_Inventory : MonoBehaviourPunCallbacks
 {
     public static Interface_Inventory instance;
 
@@ -151,11 +152,12 @@ public class Interface_Inventory : MonoBehaviour
 
     public void Leave()
     {
+        PhotonNetwork.LeaveRoom();
         SceneManager.LoadScene(0);
     }
 
     public void WinScreen()
     {
-        win.SetActive(false);
+        win.SetActive(true);
     }
 }
