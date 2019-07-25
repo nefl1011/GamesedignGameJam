@@ -6,7 +6,9 @@ using UnityEngine.AI;
 
 public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
 {
-    
+    public AudioClip[] audioClips;
+    public AudioSource aSource;
+
     [SerializeField]
     private Vector3 SpawnPosition;
     [SerializeField]
@@ -82,6 +84,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
 
         Controller = GameController.instance;
         LifeCurrent = Life;
+        PlaySound(0);
     }
 
     // Update is called once per frame
@@ -153,6 +156,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
         Debug.Log("Triggerforall");
         CurrentState = State.START_INFECTION;
         VirusAnimator.SetTrigger("Infect");
+        PlaySound(2);
     }
 
     private void SpawnMushroom()
@@ -198,6 +202,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
     public void Die()
     {
         Debug.Log("Died");
+        PlaySound(1);
         NavigationAgent.isStopped = true;
         MainMenu.KilledVirus_First();
         VirusAnimator.SetTrigger("Death");
@@ -263,6 +268,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
             HitAnimator.SetTrigger("Trigger");
             ScaleDown();
         }
+        PlaySound(3);
     }
 
     [PunRPC]
@@ -328,5 +334,11 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
     public float GetLife()
     {
         return LifeCurrent;
+    }
+
+    public void PlaySound(int soundNo)
+    {
+        aSource.clip = audioClips[soundNo];
+        aSource.Play();
     }
 }

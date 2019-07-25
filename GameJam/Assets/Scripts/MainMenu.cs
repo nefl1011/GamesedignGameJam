@@ -62,6 +62,13 @@ public class MainMenu : MonoBehaviour
         SaveState();
     }
 
+    public void ResetSave()
+    {
+        Audio_SoundAtCam(0);
+        virusKilled_First = 1;
+        SaveState();
+    }
+
     public void SpawnViruses()
     {
         GameObject tempObj;
