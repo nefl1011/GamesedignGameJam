@@ -115,8 +115,8 @@ public class ARPlayer : MonoBehaviourPunCallbacks
         {
             //Debug.Log("GenerateDrop");
             int typeRng = Random.Range(0, 2);
-            float xRng = Random.Range(-30f, 30f); 
-            float zRng = Random.Range(-30f, 30f);
+            float xRng = Random.Range(-18f, 18f); 
+            float zRng = Random.Range(-18f, 18f);
             GameController.instance.Caller_SpawnSupply(typeRng, xRng, zRng);
         }
     }

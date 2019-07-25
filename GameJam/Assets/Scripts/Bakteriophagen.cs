@@ -40,7 +40,10 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
 
     private int LifeCurrent;
 
+    [SerializeField]
     private Animator VirusAnimator;
+    [SerializeField]
+    private Animator HitAnimator;
 
     private NavMeshAgent NavigationAgent;
     
@@ -76,7 +79,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
     {
         CurrentState = State.SPAWN;
         NavigationAgent = GetComponent<NavMeshAgent>();
-        VirusAnimator = GetComponentInChildren<Animator>();
+
         Controller = GameController.instance;
         LifeCurrent = Life;
     }
@@ -147,6 +150,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
     [PunRPC]
     public void TriggerInfectForAll()
     {
+        Debug.Log("Triggerforall");
         CurrentState = State.START_INFECTION;
         VirusAnimator.SetTrigger("Infect");
     }
@@ -254,7 +258,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
         }
         else
         {
-            VirusAnimator.SetTrigger("Trigger");
+            HitAnimator.SetTrigger("Trigger");
             ScaleDown();
         }
     }

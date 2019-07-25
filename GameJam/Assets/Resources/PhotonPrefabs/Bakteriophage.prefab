@@ -98,6 +98,8 @@ MonoBehaviour:
   TimeForInfection: 5
   MaxMushroomCount: 5
   MushroomSpawnRadius: 5
+  VirusAnimator: {fileID: 8543532055159476735}
+  HitAnimator: {fileID: 550248712644048876}
 --- !u!114 &7328111613912752433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,6 +238,12 @@ PrefabInstance:
 --- !u!4 &1736906089701915781 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: d38451453d37c834a90eee9d44365e96,
+    type: 3}
+  m_PrefabInstance: {fileID: 6728393426867099551}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8543532055159476735 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: -6057140222963153312, guid: d38451453d37c834a90eee9d44365e96,
     type: 3}
   m_PrefabInstance: {fileID: 6728393426867099551}
   m_PrefabAsset: {fileID: 0}
