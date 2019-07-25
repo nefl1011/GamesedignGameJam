@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8690474962804300599}
   - component: {fileID: 8690474962804300598}
   - component: {fileID: 7328111613912752433}
+  - component: {fileID: 550248712644048876}
   m_Layer: 0
   m_Name: Bakteriophage
   m_TagString: Enemy
@@ -119,6 +120,25 @@ MonoBehaviour:
   viewIdField: 0
   InstantiationId: 1
   isRuntimeInstantiated: 0
+--- !u!95 &550248712644048876
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8690474962804300552}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 851b729d97c66c849804ac631916845e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &6728393426867099551
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -206,6 +226,11 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: b8c1a21c1915b664b8c731a1003845dd, type: 2}
+    - target: {fileID: 3998604784816889421, guid: d38451453d37c834a90eee9d44365e96,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7d018d4d7ca2ef443a3df08628ca9304, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d38451453d37c834a90eee9d44365e96, type: 3}
 --- !u!4 &1736906089701915781 stripped
