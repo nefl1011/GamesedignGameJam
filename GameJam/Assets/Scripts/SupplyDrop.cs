@@ -12,6 +12,7 @@ public class SupplyDrop : MonoBehaviour
         ARPlayer.instance.ReceiveAmmo(itemNo, amount);
         GameController.instance.Caller_DestroySupply(dropNo);
         enabled = false;
+        Interface_Inventory.instance.Audio_SoundAtCam(4);
     }
 
     private void OnTriggerStay(Collider other)

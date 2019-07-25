@@ -23,6 +23,7 @@ public class Interface_Inventory : MonoBehaviour
     public Image curItemImage;
     public Sprite[] itemImages;
     public GameObject splatter;
+    public AudioClip[] audioClips;
 
     public bool itemLoaded = true;
     public bool pumpAllowed;
@@ -69,8 +70,9 @@ public class Interface_Inventory : MonoBehaviour
         {
             pumpAllowed = false;
             splatter.SetActive(true);
-            if (ARPlayer.instance.ammunition[ARPlayer.instance.currentItem] > 5)
+            if (ARPlayer.instance.ammunition[ARPlayer.instance.currentItem] >= 5)
             {
+                Audio_SoundAtCam(1);
                 ARPlayer.instance.currentAmmo[ARPlayer.instance.currentItem] += 5;
                 ARPlayer.instance.ammunition[ARPlayer.instance.currentItem] -= 5;
                 if (ARPlayer.instance.currentAmmo[ARPlayer.instance.currentItem] == 20)
@@ -114,6 +116,7 @@ public class Interface_Inventory : MonoBehaviour
 
     public void OpenCloseItemMenu()
     {
+        Audio_SoundAtCam(0);
         itemMenu.SetTrigger("Trigger"); //Automatic switch between open/close happens in the animator
     }
 
@@ -138,6 +141,11 @@ public class Interface_Inventory : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public void Audio_SoundAtCam(int soundNo)
+    {
+        AudioSource.PlayClipAtPoint(audioClips[soundNo], mCam.transform.position);
     }
 
     public void Leave()
