@@ -24,6 +24,7 @@ public class Interface_Inventory : MonoBehaviour
     public Sprite[] itemImages;
     public GameObject splatter;
     public AudioClip[] audioClips;
+    public GameObject win;
 
     public bool itemLoaded = true;
     public bool pumpAllowed;
@@ -151,5 +152,10 @@ public class Interface_Inventory : MonoBehaviour
     public void Leave()
     {
         SceneManager.LoadScene(0);
+    }
+
+    public void WinScreen()
+    {
+        win.SetActive(false);
     }
 }
