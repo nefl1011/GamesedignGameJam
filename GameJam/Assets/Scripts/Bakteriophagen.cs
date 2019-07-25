@@ -248,8 +248,11 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
     [PunRPC]
     public void UpdateLife(int newLife)
     {
-        Debug.Log("Current Life: " + LifeCurrent);
-        Hits--;
+        if (CurrentState == State.INFECT)
+        {
+            Hits--;
+        }
+
         LifeCurrent = newLife;
         if (LifeCurrent <= 0)
         {
@@ -268,9 +271,9 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
     {
         Destination = new Vector3(x, transform.position.y, y);
 
-        NavMeshPath path = new NavMeshPath();
-        Debug.Log("Path: " + NavigationAgent.CalculatePath(Destination, path));
-        Debug.Log(path.status);
+        //NavMeshPath path = new NavMeshPath();
+        //Debug.Log("Path: " + NavigationAgent.CalculatePath(Destination, path));
+        //Debug.Log(path.status);
 
         NavigationAgent.SetDestination(Destination);
         Debug.Log("Calculate Destination");
@@ -283,7 +286,15 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
         CurrentState = State.CALLED_DEST;
         if (PhotonNetwork.IsMasterClient)
         {
-            Vector3 newDestination = RandomNavmeshLocation(AreaX);
+            Vector3 newDestination;
+            NavMeshPath path = new NavMeshPath();
+            do
+            {
+                newDestination = RandomNavmeshLocation(AreaX);
+                NavigationAgent.CalculatePath(newDestination, path);
+                Debug.Log(path.status);
+            } while (path.status != NavMeshPathStatus.PathComplete);
+
             this.photonView.RPC("CalculateRandomDestination", RpcTarget.AllViaServer, newDestination.x, newDestination.z);//Random.Range(-AreaX, AreaX), Random.Range(-AreaZ, AreaZ));
         }
     }
