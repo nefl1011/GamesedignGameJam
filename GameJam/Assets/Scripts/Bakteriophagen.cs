@@ -254,6 +254,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
         }
         else
         {
+            VirusAnimator.SetTrigger("Trigger");
             ScaleDown();
         }
     }
