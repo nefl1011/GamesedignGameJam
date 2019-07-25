@@ -67,8 +67,14 @@ public class ARPlayer : MonoBehaviourPunCallbacks
 
     public void ReceiveAmmo(int itemNo, int amount)
     {
+        if (ammunition[itemNo] == 0)
+        {
+            currentAmmo[itemNo] = 5;
+            Interface_Inventory.instance.itemLoaded = true;
+        }
         ammunition[itemNo] = ammunition[itemNo] += amount;
         ammunition[itemNo] = Mathf.Clamp(ammunition[itemNo], 0, maxAmmo[itemNo]);
+
         Interface_Inventory.instance.UpdateAmmo();
     }
 

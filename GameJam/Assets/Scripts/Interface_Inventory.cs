@@ -77,7 +77,7 @@ public class Interface_Inventory : MonoBehaviourPunCallbacks
                 Audio_SoundAtCam(1);
                 ARPlayer.instance.currentAmmo[ARPlayer.instance.currentItem] += 5;
                 ARPlayer.instance.ammunition[ARPlayer.instance.currentItem] -= 5;
-                if (ARPlayer.instance.currentAmmo[ARPlayer.instance.currentItem] == 20)
+                if (ARPlayer.instance.currentAmmo[ARPlayer.instance.currentItem] == 20 || 0 == ARPlayer.instance.ammunition[ARPlayer.instance.currentItem])
                 {
                     itemLoaded = true;
                     reload.SetActive(false);
@@ -104,9 +104,12 @@ public class Interface_Inventory : MonoBehaviourPunCallbacks
     {
         if (ARPlayer.instance.currentAmmo[ARPlayer.instance.currentItem] == 1)
         {
-            splatter.SetActive(false);
             itemLoaded = false;
-            reload.SetActive(true);
+            if (ARPlayer.instance.ammunition[ARPlayer.instance.currentItem] != 0)
+            {
+                splatter.SetActive(false);
+                reload.SetActive(true);
+            }
         }
         if(ARPlayer.instance.currentAmmo[ARPlayer.instance.currentItem] >= 1)
         {
