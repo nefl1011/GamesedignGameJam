@@ -84,6 +84,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
         Controller = GameController.instance;
         LifeCurrent = Life;
         PlaySound(0);
+        ScaleAtSpawn = transform.localScale;
     }
 
     // Update is called once per frame
@@ -99,7 +100,6 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
             {
                 InvokeRepeating("SpawnMushroom", 0, TimeForInfection / MaxMushroomCount);
                 CurrentState = State.INFECT;
-                VirusAnimator.SetTrigger("Infect");
             }
             else if (CurrentState == State.INFECT)
             {
@@ -169,8 +169,8 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
             Vector3 pos = new Vector3(xPos + transform.position.x, transform.position.y, yPos + transform.position.z);
 
             Controller.Caller_Infect(pos);
-            Life++;
-            ScaleUp();
+            LifeCurrent++;
+            photonView.RPC("RPC_Heal", RpcTarget.AllViaServer, LifeCurrent);
             MushroomCounter++;
         }
         else
@@ -180,7 +180,15 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
         }
     }
 
-    private void ScaleUp()
+    [PunRPC]
+    public void RPC_Heal(int newLife)
+    {
+        LifeCurrent = newLife;
+        ScaleUp();
+        Debug.Log("LifeCurrent");
+    }
+
+    public void ScaleUp()
     {
         if (transform.localScale.x < ScaleAtSpawn.x * 1.5f)
         {
@@ -196,6 +204,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
             float scale = ScaleAtSpawn.x * 0.01f;
             transform.localScale -= new Vector3(scale, scale, scale);
         }
+        Debug.Log("scaleDown");
     }
 
     public void Die()
@@ -228,7 +237,6 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
         Timer = 0.0f;
         NavigationAgent.speed = Speed;
         MushroomCounter = 0;
-        ScaleAtSpawn = transform.localScale;
 
         if (CurrentState == State.SPAWN)
         {

@@ -44,5 +44,6 @@ MonoBehaviour:
   - UpdateLife
   - TriggerInfectForAll
   - RPC_UpdatePlayerCount
+  - RPC_Heal
   DisableAutoOpenWizard: 1
   ShowSettings: 0
