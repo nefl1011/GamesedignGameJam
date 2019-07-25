@@ -38,8 +38,22 @@ public class MainMenu_VirusSwim : MonoBehaviour
         Invoke("FindDestination", newDestTime);
     }
 
-    public void OpenInfo()
+    public void OpenInfo(int type = 0)
     {
-        MainMenu.instance.OpenInfo_First();
+        switch (type)
+        {
+            case 0:
+                MainMenu.instance.OpenInfo_First();
+                break;
+            case 1:
+                MainMenu.instance.OpenInfo_Second();
+                break;
+            case 2:
+                MainMenu.instance.OpenInfo_Third();
+                break;
+            default:
+                MainMenu.instance.OpenInfo_First();
+                break;
+        }
     }
 }
