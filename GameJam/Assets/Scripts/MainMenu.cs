@@ -16,6 +16,8 @@ public class MainMenu : MonoBehaviour
     public Animator openThirdInfo;
     public Animator openSettings;
     public LightweightRenderPipelineAsset pipelineAsset;
+    public AudioClip[] audioClips;
+    public Transform mCam;
 
     public GameObject[] virusPrefab;
     public GameObject canvas;
@@ -27,6 +29,7 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
+        mCam = Camera.main.transform;
         LoadState();
         SpawnViruses();
     }
@@ -96,26 +99,34 @@ public class MainMenu : MonoBehaviour
 
     public void OpenInfo_First()
     {
+        Audio_SoundAtCam(1);
+        Audio_SoundAtCam(0);
         openInfo.SetTrigger("Trigger");
     }
 
     public void OpenInfo_Second()
     {
+        Audio_SoundAtCam(1);
+        Audio_SoundAtCam(0);
         openSecondInfo.SetTrigger("Trigger");
     }
 
     public void OpenInfo_Third()
     {
+        Audio_SoundAtCam(1);
+        Audio_SoundAtCam(0);
         openThirdInfo.SetTrigger("Trigger");
     }
 
     public void OpenSettings()
     {
         openSettings.SetTrigger("Trigger");
+        Audio_SoundAtCam(0);
     }
 
     public void LowSpecMode()
     {
+        Audio_SoundAtCam(0);
         Application.targetFrameRate = 30;
         QualitySettings.vSyncCount = 0;
         pipelineAsset.shadowCascadeOption = 0;
@@ -126,6 +137,12 @@ public class MainMenu : MonoBehaviour
 
     public void ExitApp()
     {
+        Audio_SoundAtCam(0);
         Application.Quit();
+    }
+
+    public void Audio_SoundAtCam(int soundNo)
+    {
+        AudioSource.PlayClipAtPoint(audioClips[soundNo], mCam.position);
     }
 }

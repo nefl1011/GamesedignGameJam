@@ -97,7 +97,7 @@ LightmapSettings:
     m_ShowResolutionOverlay: 1
     m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1074,7 +1074,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 3c6b561db57c6b84ea320157d073ee8f, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1402,6 +1402,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1879464521}
+        m_MethodName: Audio_SoundAtCam
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &587514168
@@ -1468,14 +1479,14 @@ RectTransform:
   m_GameObject: {fileID: 656725246}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 962988447}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 822, y: 11}
+  m_AnchoredPosition: {x: 534, y: -43}
   m_SizeDelta: {x: 1200, y: 1200}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &656725248
@@ -1498,7 +1509,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 711f6ae7da311624ea202cb1d20c84c9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dae76d18e64cebf489d0e7aaabbd144a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1542,14 +1553,14 @@ RectTransform:
   m_GameObject: {fileID: 691554791}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children: []
   m_Father: {fileID: 1947474356}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 822, y: 11}
+  m_AnchoredPosition: {x: 693, y: 11}
   m_SizeDelta: {x: 1200, y: 1200}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &691554793
@@ -1572,7 +1583,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 711f6ae7da311624ea202cb1d20c84c9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0c01b65f4b40d8643bd1880a252965e4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4428,6 +4439,10 @@ MonoBehaviour:
   openThirdInfo: {fileID: 962988448}
   openSettings: {fileID: 1198606806}
   pipelineAsset: {fileID: 11400000, guid: 19ba41d7c0026c3459d37c2fe90c55a0, type: 2}
+  audioClips:
+  - {fileID: 8300000, guid: 22fb5c7ec4b51e441b32655ff8ea1c72, type: 3}
+  - {fileID: 8300000, guid: de14bd2467ed6614f84d828de042c4f8, type: 3}
+  mCam: {fileID: 0}
   virusPrefab:
   - {fileID: 6257537198863727626, guid: baaf2aa622379594aa82b28650ca6d2c, type: 3}
   - {fileID: 6257537198863727626, guid: 3d13e47c98a93f94abdb03533e837927, type: 3}
