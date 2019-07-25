@@ -57,6 +57,9 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
     private GameController Controller;
 
     private int MushroomCounter;
+
+    private Vector3 ScaleAtSpawn;
+
     
     private enum State
     {
@@ -74,7 +77,6 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
         CurrentState = State.SPAWN;
         NavigationAgent = GetComponent<NavMeshAgent>();
         VirusAnimator = GetComponentInChildren<Animator>();
-        //Spawn();
         Controller = GameController.instance;
     }
 
@@ -152,13 +154,32 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
             Vector3 pos = new Vector3(xPos + transform.position.x, transform.position.y, yPos + transform.position.z);
 
             Controller.Caller_Infect(pos);
-
+            Life++;
+            ScaleUp();
             MushroomCounter++;
         }
         else
         {
             MushroomCounter = 0;
             CancelInvoke("SpawnMushroom");
+        }
+    }
+
+    private void ScaleUp()
+    {
+        if (transform.localScale.x < ScaleAtSpawn.x * 1.5f)
+        {
+            float scale = ScaleAtSpawn.x * 0.01f;
+            transform.localScale += new Vector3(scale, scale, scale);
+        }
+    }
+
+    private void ScaleDown()
+    {
+        if (transform.localScale.x > ScaleAtSpawn.x * 0.5f)
+        {
+            float scale = ScaleAtSpawn.x * 0.01f;
+            transform.localScale -= new Vector3(scale, scale, scale);
         }
     }
 
@@ -192,6 +213,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
         Timer = 0.0f;
         NavigationAgent.speed = Speed;
         MushroomCounter = 0;
+        ScaleAtSpawn = transform.localScale;
 
         if (CurrentState == State.SPAWN)
         {
@@ -213,6 +235,10 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
             {
                 CurrentState = State.DIED;
                 Die();
+            }
+            else
+            {
+                ScaleDown();
             }
         }
     }
