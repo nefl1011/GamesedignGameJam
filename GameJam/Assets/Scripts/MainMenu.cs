@@ -99,7 +99,7 @@ public class MainMenu : MonoBehaviour
 
     public void OpenInfo_First()
     {
-        Audio_SoundAtCam(1);
+        Audio_SoundAtCam(2);
         Audio_SoundAtCam(0);
         openInfo.SetTrigger("Trigger");
     }
@@ -113,7 +113,7 @@ public class MainMenu : MonoBehaviour
 
     public void OpenInfo_Third()
     {
-        Audio_SoundAtCam(1);
+        Audio_SoundAtCam(3);
         Audio_SoundAtCam(0);
         openThirdInfo.SetTrigger("Trigger");
     }

@@ -4442,6 +4442,8 @@ MonoBehaviour:
   audioClips:
   - {fileID: 8300000, guid: 22fb5c7ec4b51e441b32655ff8ea1c72, type: 3}
   - {fileID: 8300000, guid: de14bd2467ed6614f84d828de042c4f8, type: 3}
+  - {fileID: 8300000, guid: ae5c308b872d23948baf1e908ed5db2c, type: 3}
+  - {fileID: 8300000, guid: f99cf74215abb6b4ea72fab0e8437e43, type: 3}
   mCam: {fileID: 0}
   virusPrefab:
   - {fileID: 6257537198863727626, guid: baaf2aa622379594aa82b28650ca6d2c, type: 3}

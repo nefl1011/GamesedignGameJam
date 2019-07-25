@@ -47,9 +47,11 @@ public class ARPlayer : MonoBehaviourPunCallbacks
         switch (currentItem)
         {
             case 0:
+                Interface_Inventory.instance.Audio_SoundAtCam(3);
                 Fight();
                 break;
             case 1:
+                Interface_Inventory.instance.Audio_SoundAtCam(2);
                 Desinfect();
                 break;
             default:
