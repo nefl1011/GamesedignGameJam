@@ -152,6 +152,7 @@ public class Interface_Inventory : MonoBehaviourPunCallbacks
 
     public void Leave()
     {
+        GameController.instance.Caller_PlayerLeft();
         PhotonNetwork.LeaveRoom();
         SceneManager.LoadScene(0);
     }

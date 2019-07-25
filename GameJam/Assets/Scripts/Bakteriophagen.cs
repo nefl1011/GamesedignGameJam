@@ -64,8 +64,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
     private int MushroomCounter;
 
     private Vector3 ScaleAtSpawn;
-
-    
+        
     private enum State
     {
         SPAWN = 0,
@@ -275,11 +274,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
     public void CalculateRandomDestination(float x, float y)
     {
         Destination = new Vector3(x, transform.position.y, y);
-
-        //NavMeshPath path = new NavMeshPath();
-        //Debug.Log("Path: " + NavigationAgent.CalculatePath(Destination, path));
-        //Debug.Log(path.status);
-
+        
         NavigationAgent.SetDestination(Destination);
         Debug.Log("Calculate Destination");
         NavigationAgent.isStopped = false;
@@ -330,12 +325,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
         }
         return finalPosition;
     }
-
-    public float GetLife()
-    {
-        return LifeCurrent;
-    }
-
+    
     public void PlaySound(int soundNo)
     {
         aSource.clip = audioClips[soundNo];

@@ -26,11 +26,15 @@ public class GameController : MonoBehaviourPunCallbacks
 
     public int MinMushroomsToFight;
 
+    public int MinMushroomsToPlayer;
+
     public int mushroomsCreated = 0;
 
     public bool couldFight;
 
     private Virus virus;
+
+    private int PlayerCount = 0;
 
     public struct MushroomStruct
     {
@@ -47,6 +51,7 @@ public class GameController : MonoBehaviourPunCallbacks
     {
         Mushrooms = new List<MushroomStruct>();
         CreatePlayer();
+        MinMushroomsToPlayer = MinMushroomsToFight;
     }
 
     void Update()
@@ -92,7 +97,7 @@ public class GameController : MonoBehaviourPunCallbacks
                 Destroy(mGameObject);
             }
         }
-        couldFight = Mushrooms.Count <= MinMushroomsToFight;
+        couldFight = Mushrooms.Count <= MinMushroomsToPlayer;
     }
 
     [PunRPC]
@@ -113,7 +118,7 @@ public class GameController : MonoBehaviourPunCallbacks
 
         Mushrooms.Add(new MushroomStruct { id = mushroomsCreated, mushroom = newMushroomComponent });
 
-        couldFight = Mushrooms.Count <= MinMushroomsToFight;
+        couldFight = Mushrooms.Count <= MinMushroomsToPlayer;
         Debug.Log("MushroomsCount " + Mushrooms.Count);
         Debug.Log("couldFight " + couldFight);
         mushroomsCreated++;
@@ -136,6 +141,13 @@ public class GameController : MonoBehaviourPunCallbacks
         Destroy(shotVisual, 5);
     }
 
+    [PunRPC]
+    public void RPC_UpdatePlayerCount()
+    {
+        PlayerCount = PhotonNetwork.PlayerList.Length;
+        MinMushroomsToPlayer = MinMushroomsToFight - PlayerCount * 5;
+    }
+        
     public void Caller_SpawnSupply(int type, float posX, float posZ)
     {
         photonView.RPC("RPC_SpawnSupply", RpcTarget.AllViaServer, supplyDropsCreated, type, posX, posZ);
@@ -170,11 +182,24 @@ public class GameController : MonoBehaviourPunCallbacks
     public void Caller_SpawnParts(Vector3 pos) {
         photonView.RPC("RPC_SpawnParts", RpcTarget.AllViaServer, pos.x, pos.y, pos.z);
     }
+
+    public void Caller_NewPlayer()
+    {
+        photonView.RPC("RPC_UpdatePlayerCount", RpcTarget.AllViaServer);
+    }
+
+    public void Caller_PlayerLeft()
+    {
+        photonView.RPC("RPC_UpdatePlayerCount", RpcTarget.AllViaServer);
+    }
+
     
     private void CreatePlayer()
     {
         Debug.Log("Creating Player");
         GameObject Player = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PhotonPlayer"), Vector3.zero, Quaternion.identity);
+
+        Caller_NewPlayer();
         
         if (Player.GetComponent<PhotonView>().Owner.IsMasterClient)
         {

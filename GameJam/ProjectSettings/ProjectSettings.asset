@@ -160,7 +160,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.Sedigner.GameJam
+    Android: com.Sedigner.ARasite
   buildNumber: {}
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 19
@@ -274,7 +274,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 711f6ae7da311624ea202cb1d20c84c9, type: 3}
+      m_Icon: {fileID: 2800000, guid: e18f23c5d8752bf4ea36a4824463fc0b, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
