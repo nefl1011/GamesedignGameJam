@@ -11,7 +11,7 @@ public class ARPlayer : MonoBehaviourPunCallbacks
     public int[] currentAmmo = { 10, 20 };
     public int[] ammunition = { 80, 80 };
     public int[] maxAmmo = { 120, 120 };
-    public int rayLength = 40;
+    public int rayLength = 60;
 
     private Camera mCam;
     

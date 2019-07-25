@@ -119,7 +119,10 @@ public class GameController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void RPC_Fight(int amount)
     {
-        virus.Hit(amount);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            virus.Hit(amount);
+        }
     }
 
     [PunRPC]
@@ -164,12 +167,12 @@ public class GameController : MonoBehaviourPunCallbacks
     public void Caller_SpawnParts(Vector3 pos) {
         photonView.RPC("RPC_SpawnParts", RpcTarget.AllViaServer, pos.x, pos.y, pos.z);
     }
-
+    
     private void CreatePlayer()
     {
         Debug.Log("Creating Player");
         GameObject Player = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PhotonPlayer"), Vector3.zero, Quaternion.identity);
-
+        
         if (Player.GetComponent<PhotonView>().Owner.IsMasterClient)
         {
             GameObject bakterioPhage = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Bakteriophage"), new Vector3(0, 0, 0), Quaternion.identity);
@@ -177,4 +180,6 @@ public class GameController : MonoBehaviourPunCallbacks
             virus.Spawn();
         }
     }
+
+    
 }

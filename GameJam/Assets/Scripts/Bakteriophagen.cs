@@ -12,7 +12,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
     [SerializeField]
     private int SpawnSeconds;
     [SerializeField]
-    private float Life;
+    private int Life;
     [SerializeField]
     private float AreaX;
     [SerializeField]
@@ -38,7 +38,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
     [SerializeField]
     private float MushroomSpawnRadius;
 
-    private float LifeCurrent;
+    private int LifeCurrent;
 
     private Animator VirusAnimator;
 
@@ -78,6 +78,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
         NavigationAgent = GetComponent<NavMeshAgent>();
         VirusAnimator = GetComponentInChildren<Animator>();
         Controller = GameController.instance;
+        LifeCurrent = Life;
     }
 
     // Update is called once per frame
@@ -228,18 +229,25 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
         if (CurrentState != State.DIED)
         {
             Debug.Log("Hit");
-            Hits--;
             LifeCurrent -= amount;
-            Debug.Log("Current Life: " + LifeCurrent);
-            if (LifeCurrent <= 0)
-            {
-                CurrentState = State.DIED;
-                Die();
-            }
-            else
-            {
-                ScaleDown();
-            }
+            photonView.RPC("UpdateLife", RpcTarget.AllViaServer, LifeCurrent);
+        }
+    }
+
+    [PunRPC]
+    public void UpdateLife(int newLife)
+    {
+        Debug.Log("Current Life: " + LifeCurrent);
+        Hits--;
+        LifeCurrent = newLife;
+        if (LifeCurrent <= 0)
+        {
+            CurrentState = State.DIED;
+            Die();
+        }
+        else
+        {
+            ScaleDown();
         }
     }
 
@@ -293,5 +301,10 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
             finalPosition = hit.position;
         }
         return finalPosition;
+    }
+
+    public float GetLife()
+    {
+        return LifeCurrent;
     }
 }

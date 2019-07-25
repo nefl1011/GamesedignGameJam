@@ -84,7 +84,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnPosition: {x: 0, y: 0, z: 0}
   SpawnSeconds: 5
-  Life: 100
+  Life: 50
   AreaX: 20
   AreaZ: 20
   AngularSpeed: 120

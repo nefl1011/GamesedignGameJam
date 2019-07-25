@@ -70,4 +70,4 @@ MonoBehaviour:
   currentAmmo: 0a00000014000000
   ammunition: 5000000050000000
   maxAmmo: 7800000078000000
-  rayLength: 40
+  rayLength: 60

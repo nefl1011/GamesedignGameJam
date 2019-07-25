@@ -13,4 +13,6 @@ public interface Virus
     void Spawn();
 
     void Hit(int amount);
+
+    float GetLife();
 }
