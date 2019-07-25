@@ -63,13 +63,15 @@ public class MainMenu : MonoBehaviour
     {
         GameObject tempObj;
         Vector2 rngPos;
+        float rngSize;
 
         for (int i=0; i < virusKilled_First; i++)
         {
             tempObj = Instantiate(virusPrefab[0], Vector3.zero, Quaternion.identity);
             tempObj.transform.parent = canvas.transform;
             tempObj.transform.SetSiblingIndex(1);
-            tempObj.transform.localScale = Vector3.one;
+            rngSize = Random.Range(0.6f, 1f);
+            tempObj.transform.localScale = new Vector3(rngSize,rngSize,rngSize);
             rngPos = new Vector2(Random.Range(0f,300), Random.Range(-200, 0));
             tempObj.transform.localPosition = rngPos;
         }
@@ -78,14 +80,16 @@ public class MainMenu : MonoBehaviour
         tempObj = Instantiate(virusPrefab[1], Vector3.zero, Quaternion.identity);
         tempObj.transform.parent = canvas.transform;
         tempObj.transform.SetSiblingIndex(1);
-        tempObj.transform.localScale = Vector3.one;
+        rngSize = Random.Range(0.6f, 1f);
+        tempObj.transform.localScale = new Vector3(rngSize, rngSize, rngSize);
         rngPos = new Vector2(Random.Range(0f, 300), Random.Range(-200, 0));
         tempObj.transform.localPosition = rngPos;
 
         tempObj = Instantiate(virusPrefab[2], Vector3.zero, Quaternion.identity);
         tempObj.transform.parent = canvas.transform;
         tempObj.transform.SetSiblingIndex(1);
-        tempObj.transform.localScale = Vector3.one;
+        rngSize = Random.Range(0.6f, 1f);
+        tempObj.transform.localScale = new Vector3(rngSize, rngSize, rngSize);
         rngPos = new Vector2(Random.Range(0f, 300), Random.Range(-200, 0));
         tempObj.transform.localPosition = rngPos;
     }
@@ -112,11 +116,11 @@ public class MainMenu : MonoBehaviour
 
     public void LowSpecMode()
     {
-        Screen.SetResolution(854, 480, true);
         Application.targetFrameRate = 30;
         QualitySettings.vSyncCount = 0;
         pipelineAsset.shadowCascadeOption = 0;
         pipelineAsset.shadowDistance = 0;
+        pipelineAsset.renderScale = 0.5f;
         OpenSettings();
     }
 
