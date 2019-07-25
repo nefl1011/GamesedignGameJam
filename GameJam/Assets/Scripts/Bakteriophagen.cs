@@ -117,7 +117,7 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
             //Infect
             NavigationAgent.isStopped = true;
             Debug.Log("At Destination");
-            CurrentState = State.START_INFECTION;
+            photonView.RPC("TriggerInfectForAll", RpcTarget.AllViaServer);
         }
 
         if (Jump)
@@ -142,6 +142,13 @@ public class Bakteriophagen : MonoBehaviourPunCallbacks, Virus
             Timer = 0.0f;
             CallNewDestination();
         }
+    }
+
+    [PunRPC]
+    public void TriggerInfectForAll()
+    {
+        CurrentState = State.START_INFECTION;
+        VirusAnimator.SetTrigger("Infect");
     }
 
     private void SpawnMushroom()

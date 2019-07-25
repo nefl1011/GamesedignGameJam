@@ -42,5 +42,6 @@ MonoBehaviour:
   - RPC_DestroyMushroom
   - RPC_SpawnParts
   - UpdateLife
+  - TriggerInfectForAll
   DisableAutoOpenWizard: 1
   ShowSettings: 0
